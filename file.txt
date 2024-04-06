@@ -40,8 +40,8 @@
 
 
 #define LEDGREEN_GPIO_PORT					GPIOA
-#define LEDGREEN_GPIO_PIN						GPIO_Pin_11
-#define LEDGREEN_PIN0						11
+#define LEDGREEN_GPIO_PIN						GPIO_Pin_0
+#define LEDGREEN_PIN0						0
 #define LEDGREENControl_SetClock				RCC_AHB1Periph_GPIOA
 
 
@@ -49,7 +49,6 @@
 #define BUTTON_GPIO_PIN						GPIO_Pin_4
 #define BUTTON_PIN4							4
 #define BUTTONControl_SetClock				RCC_AHB1Periph_GPIOB
-
 
 #define BUTTON3_GPIO_PORT					GPIOA
 #define BUTTON3_GPIO_PIN						GPIO_Pin_4
@@ -121,7 +120,7 @@ void delay() {
 
 
 void delay1() {
-	for (uint32_t i = 0; i < 500000; i++)
+	for (uint32_t i = 0; i < 200000; i++)
 		;
 }
 
@@ -395,6 +394,7 @@ int main(void) {
 int meow=1;
 int gau=1;
 int cuctac=1;
+int ha =1;
 	uint8_t status = 1;
 	LEDRED_init();
 	LEDBLUE_init();
@@ -405,6 +405,8 @@ int cuctac=1;
 	buzzer_Init();
 	Button4_init();
 
+
+
 	while (1) {
 
 		if (ButtonRead_Status(BUTTON_GPIO_PORT, BUTTON_GPIO_PIN) == BTN_PRESS) { //doc SW5
@@ -412,27 +414,33 @@ int cuctac=1;
 			meow++;
 		}
 
+
 		if (ButtonRead_Status(BUTTON3_GPIO_PORT, BUTTON3_GPIO_PIN) == BTN_PRESS) {  //doc SW3
 					delay();
 					gau++;
 				}
 
+
 		if (ButtonRead_Status(BUTTON2_GPIO_PORT, BUTTON2_GPIO_PIN) == BTN_PRESS) {  //doc SW2
 
 							buzzerControlSetStatus(BUZZER_GPIO_PORT, BUZZER_GPIO_PIN, GPIO_PIN_SET);
-							delay();
+							delay1();
 							cuctac++;
 						}
 
+
 		if (ButtonRead_Status(BUTTON4_GPIO_PORT, BUTTON4_GPIO_PIN) == BTN_PRESS) {  //doc SW4
-							delay();
-							LEDControl_SetStatus(LEDRED_GPIO_PORT, LEDRED_GPIO_PIN, GPIO_PIN_LOW);
-
-															LEDControl_SetStatus(LEDGREEN_GPIO_PORT, LEDGREEN_GPIO_PIN, GPIO_PIN_LOW);
-
-															LEDControl_SetStatus(LEDBLUE_GPIO_PORT, LEDBLUE_GPIO_PIN, GPIO_PIN_LOW);
-
-							cuctac++;
+//			delay();
+ delay1();
+ ha++;
+ cuctac--;
+//							LEDControl_SetStatus(LEDRED_GPIO_PORT, LEDRED_GPIO_PIN, GPIO_PIN_LOW);
+//
+//							LEDControl_SetStatus(LEDGREEN_GPIO_PORT, LEDGREEN_GPIO_PIN, GPIO_PIN_LOW);
+//
+//							LEDControl_SetStatus(LEDBLUE_GPIO_PORT, LEDBLUE_GPIO_PIN, GPIO_PIN_LOW);
+							//delay();
+							//cuctac--;
 						}
 
 		if(meow %2==0) {
@@ -455,28 +463,32 @@ int cuctac=1;
 					LEDControl_SetStatus(LEDBLUE_GPIO_PORT, LEDBLUE_GPIO_PIN, GPIO_PIN_LOW);
 				}
 
-		if(cuctac %2==0) {
+		if(cuctac >=2) {
 			buzzerControlSetStatus(BUZZER_GPIO_PORT, BUZZER_GPIO_PIN, GPIO_PIN_RESET);
 						delay1();
 					LEDControl_SetStatus(LEDRED_GPIO_PORT, LEDRED_GPIO_PIN, GPIO_PIN_HIGH);
+						delay1();
+						LEDControl_SetStatus(LEDRED_GPIO_PORT, LEDRED_GPIO_PIN, GPIO_PIN_LOW);
 						delay1();
 					LEDControl_SetStatus(LEDGREEN_GPIO_PORT, LEDGREEN_GPIO_PIN, GPIO_PIN_HIGH);
 						delay1();
 					LEDControl_SetStatus(LEDBLUE_GPIO_PORT, LEDBLUE_GPIO_PIN, GPIO_PIN_HIGH);
 						delay1();
 				}
-////		else {
-////			delay();
-//			LEDControl_SetStatus(LEDRED_GPIO_PORT, LEDRED_GPIO_PIN, GPIO_PIN_LOW);
-//									delay();
-//								LEDControl_SetStatus(LEDGREEN_GPIO_PORT, LEDGREEN_GPIO_PIN, GPIO_PIN_LOW);
-//									delay();
-//								LEDControl_SetStatus(LEDBLUE_GPIO_PORT, LEDBLUE_GPIO_PIN, GPIO_PIN_LOW);
-//									delay();
-//		}
+
+
+			if(ha>=2){
+//		//delay();
+			LEDControl_SetStatus(LEDRED_GPIO_PORT, LEDRED_GPIO_PIN, GPIO_PIN_LOW);
+
+								LEDControl_SetStatus(LEDGREEN_GPIO_PORT, LEDGREEN_GPIO_PIN, GPIO_PIN_LOW);
+
+								LEDControl_SetStatus(LEDBLUE_GPIO_PORT, LEDBLUE_GPIO_PIN, GPIO_PIN_LOW);
+
+		}
 
 	}
-	return 0;
+	//return 0;
 }
 
 
